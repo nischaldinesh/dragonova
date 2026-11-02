@@ -10,21 +10,22 @@
 <meta property="og:image" content="assets/logo-white.jpg">
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
-<meta name="theme-color" content="#fbf8f4">
+<meta name="theme-color" content="#f7f7fb">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  /* One palette for the whole site: warm neutrals + the ember→violet brand gradient.
+  /* One palette for the whole site, taken from the footer's blue-hour meadow:
+     periwinkle (--ember), violet (--violet) and horizon rose (--rose) on cool lavender neutrals.
      Copper (--brand) is reserved for the logo wordmark. */
-  --bg:#fbf8f4; --bg-2:#f4f0ea; --surface:#ffffff; --ink:#16131b; --muted:#6a6472; --line:#e8e2da;
-  --ember:#e2552b; --ember-2:#c23f17; --ember-text:#c2421b; --ember-ink:#ffffff; --tint:#fdece4;
-  --violet:#6d4aff; --violet-text:#5634e8; --violet-tint:#efebff;
-  --sun:#ff9a6b; --brand:#a8692b; --brand-light:#e3a865;
-  --night:#14111a; --on-night:#f4f0fa;
-  --grad:linear-gradient(100deg,var(--ember),var(--violet));
-  --shadow:30,20,45;
+  --bg:#f7f7fb; --bg-2:#eeeef8; --surface:#ffffff; --ink:#17162b; --muted:#64627a; --line:#e2e1ee;
+  --ember:#4f63c9; --ember-2:#3d4fae; --ember-text:#3f51b5; --ember-ink:#ffffff; --tint:#e9edfb;
+  --violet:#7d62d8; --violet-text:#6247c4; --violet-tint:#f0ebfb; --rose:#c47fb5;
+  --sun:#c9b8ff; --brand:#a8692b; --brand-light:#e3a865;
+  --night:#15142b; --on-night:#f1f0fb;
+  --grad:linear-gradient(100deg,#4f63c9,#8a6fd8 55%,#c886bd);
+  --shadow:40,38,100;
   --display:"Poppins",system-ui,-apple-system,"Segoe UI",sans-serif;
   --sans:"Poppins",system-ui,-apple-system,"Segoe UI",sans-serif;
   --mono:"Poppins",system-ui,-apple-system,"Segoe UI",sans-serif;
@@ -33,15 +34,17 @@
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --bg:#0e0c12; --bg-2:#131118; --surface:#1a1720; --ink:#f4f0fa; --muted:#a39cad; --line:#2a2532;
-    --ember:#ff6a3d; --ember-2:#e2552b; --ember-text:#ff8a63; --ember-ink:#16131b; --tint:#2a1712;
-    --violet:#8f72ff; --violet-text:#a891ff; --violet-tint:#1f1936; --brand:#e3a865; --night:#08070b; --shadow:0,0,0;
+    --bg:#0c0c17; --bg-2:#11111f; --surface:#181828; --ink:#f1f0fb; --muted:#a09fbb; --line:#2a2a42;
+    --ember:#8ea0ff; --ember-2:#6f84f0; --ember-text:#a9b6ff; --ember-ink:#17162b; --tint:#1a2040;
+    --violet:#a88dff; --violet-text:#bba6ff; --violet-tint:#211b3d; --rose:#e1a6d4; --brand:#e3a865; --night:#07070f; --shadow:0,0,0;
+    --grad:linear-gradient(100deg,#8ea0ff,#a88dff 55%,#e1a6d4);
   }
 }
 :root[data-theme="dark"]{
-  --bg:#0e0c12; --bg-2:#131118; --surface:#1a1720; --ink:#f4f0fa; --muted:#a39cad; --line:#2a2532;
-  --ember:#ff6a3d; --ember-2:#e2552b; --ember-text:#ff8a63; --ember-ink:#16131b; --tint:#2a1712;
-  --violet:#8f72ff; --violet-text:#a891ff; --violet-tint:#1f1936; --brand:#e3a865; --night:#08070b; --shadow:0,0,0;
+  --bg:#0c0c17; --bg-2:#11111f; --surface:#181828; --ink:#f1f0fb; --muted:#a09fbb; --line:#2a2a42;
+  --ember:#8ea0ff; --ember-2:#6f84f0; --ember-text:#a9b6ff; --ember-ink:#17162b; --tint:#1a2040;
+  --violet:#a88dff; --violet-text:#bba6ff; --violet-tint:#211b3d; --rose:#e1a6d4; --brand:#e3a865; --night:#07070f; --shadow:0,0,0;
+  --grad:linear-gradient(100deg,#8ea0ff,#a88dff 55%,#e1a6d4);
 }
 
 *{box-sizing:border-box;margin:0;padding:0}
@@ -85,7 +88,7 @@ h3{font-size:22px; letter-spacing:-.02em; line-height:1.15}
 .nav.scrolled{background:color-mix(in srgb,var(--bg) 84%,transparent); -webkit-backdrop-filter:blur(14px); backdrop-filter:blur(14px); border-bottom-color:var(--line)}
 .nav-in{height:72px; display:flex; align-items:center; gap:24px}
 .brand{display:flex; align-items:center; gap:10px; text-decoration:none; margin-right:auto}
-.logo{width:44px; height:auto; display:block}
+.logo{width:auto; height:52px; display:block}
 .brand b{font-family:var(--display); font-weight:600; font-size:19px; letter-spacing:.16em; text-transform:uppercase; color:var(--brand)}
 .nav-links{display:flex; gap:26px; list-style:none}
 .nav-links a{text-decoration:none; font-size:14.5px; font-weight:500; color:var(--muted); white-space:nowrap; transition:color .2s}
@@ -97,14 +100,17 @@ h3{font-size:22px; letter-spacing:-.02em; line-height:1.15}
 .menu-btn{display:none}
 
 /* Hero — cinematic video */
-.hero{position:relative; isolation:isolate; min-height:100vh; min-height:100svh; margin-top:-72px; padding-top:72px; display:flex; flex-direction:column; justify-content:flex-end; background:#000; color:#fff; overflow:hidden}
+.hero{position:relative; isolation:isolate; min-height:100vh; min-height:100svh; margin-top:-72px; padding-top:72px; display:flex; flex-direction:column; justify-content:flex-end; background:#14111a; color:#fff; overflow:hidden}
 .hero-video{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0}
+/* Colour grade: recolours the video into the footer's blue-hour palette, keeping its light and shadow */
+.hero-grade{position:absolute; inset:0; z-index:1; pointer-events:none; mix-blend-mode:color;
+  background:linear-gradient(to bottom, #4258ac 0%, #6269ba 28%, #b789b9 52%, #c691ae 66%, #52597e 86%)}
 .hero-blur{position:absolute; inset:0; z-index:1; pointer-events:none; -webkit-backdrop-filter:blur(24px); backdrop-filter:blur(24px);
   -webkit-mask-image:linear-gradient(to top, #000 0%, transparent 45%); mask-image:linear-gradient(to top, #000 0%, transparent 45%)}
 .hero-content{position:relative; z-index:10; width:100%; display:flex; justify-content:center; padding-top:48px; padding-bottom:clamp(104px,13vh,150px)}
 .hero-main{width:100%; max-width:920px; text-align:center; display:flex; flex-direction:column; align-items:center}
 .hero h1{font-size:clamp(40px,6.4vw,92px); font-weight:700; letter-spacing:-.045em; line-height:1.02; color:#fff; text-shadow:0 2px 40px rgba(0,0,0,.35)}
-.hl-hero{background:linear-gradient(100deg,#ff8a5c,#a48bff); -webkit-background-clip:text; background-clip:text; color:transparent; text-shadow:none; padding-right:.04em}
+.hl-hero{background:linear-gradient(100deg,#c7d0ff,#d9c6ff 50%,#f7c4e6); -webkit-background-clip:text; background-clip:text; color:transparent; text-shadow:none; padding-right:.04em}
 .hero-lead{font-size:clamp(16px,1.5vw,20px); color:rgba(255,255,255,.82); text-shadow:0 1px 14px rgba(0,0,0,.6); max-width:52ch; text-wrap:balance; margin-top:clamp(16px,2vw,24px); margin-bottom:clamp(24px,3.4vw,44px); text-wrap:pretty}
 .hero-cta{display:flex; flex-wrap:wrap; justify-content:center; gap:12px}
 .pill{display:inline-flex; align-items:center; justify-content:center; gap:8px; height:50px; padding:0 28px; border-radius:999px; font-weight:600; font-size:15px; text-decoration:none; color:#fff; white-space:nowrap; transition:background-color .25s, transform .25s var(--ease)}
@@ -122,8 +128,8 @@ h3{font-size:22px; letter-spacing:-.02em; line-height:1.15}
   mask:linear-gradient(#fff 0 0) content-box exclude, linear-gradient(#fff 0 0)}
 
 .hero-shade{position:absolute; inset:0; z-index:2; pointer-events:none;
-  background:radial-gradient(ellipse 46% 30% at 50% 70%, rgba(12,8,16,.5), rgba(12,8,16,.18) 60%, transparent 100%),
-             linear-gradient(to bottom, rgba(12,8,16,.28), transparent 18%)}
+  background:radial-gradient(ellipse 46% 30% at 50% 70%, rgba(20,17,40,.5), rgba(20,17,40,.18) 60%, transparent 100%),
+             linear-gradient(to bottom, rgba(20,17,40,.3), transparent 18%)}
 
 /* Hero tag + scroll cue */
 .hero-tag{display:inline-flex; align-items:center; gap:10px; height:36px; padding:0 16px 0 12px; border-radius:999px; font-size:14px; font-weight:500; margin-bottom:clamp(18px,2.2vw,28px)}
@@ -190,7 +196,7 @@ h3{font-size:22px; letter-spacing:-.02em; line-height:1.15}
 .how-path path{fill:none; stroke-linecap:round}
 .how-path .base{stroke:var(--line); stroke-width:2}
 .how-path .fill{stroke:url(#howGrad); stroke-width:3; filter:drop-shadow(0 0 6px color-mix(in srgb,var(--violet) 40%,transparent))}
-.how-path stop:first-child{stop-color:var(--ember)} .how-path stop:last-child{stop-color:var(--violet)}
+.how-path stop:first-child{stop-color:var(--ember)} .how-path stop:last-child{stop-color:var(--rose)}
 .how-spark{position:absolute; left:0; top:0; width:26px; height:26px; margin:-13px 0 0 -13px; z-index:2; filter:drop-shadow(0 0 8px var(--ember)); will-change:transform; pointer-events:none}
 .how-spark::before{content:""; position:absolute; inset:0; background:var(--ember); -webkit-mask:var(--twinkle) center/contain no-repeat; mask:var(--twinkle) center/contain no-repeat; animation:spin 6s linear infinite}
 @keyframes spin{to{rotate:360deg}}
@@ -211,7 +217,7 @@ h3{font-size:22px; letter-spacing:-.02em; line-height:1.15}
   .how-path,.how-spark{display:none}
   .how-steps{grid-template-columns:1fr; gap:36px; padding-left:76px}
   .how-vline{display:block; position:absolute; left:27px; top:28px; width:2px; background:var(--line); border-radius:2px}
-  .how-vline b{display:block; width:100%; height:100%; background:linear-gradient(180deg,var(--ember),var(--violet)); transform-origin:top; transform:scaleY(0)}
+  .how-vline b{display:block; width:100%; height:100%; background:linear-gradient(180deg,var(--ember),var(--violet),var(--rose)); transform-origin:top; transform:scaleY(0)}
   .hstep{padding:0; text-align:left}
   .hstep .node{left:-76px; top:0; margin:0}
   .hstep p{margin-inline:0}
@@ -234,16 +240,16 @@ h3{font-size:22px; letter-spacing:-.02em; line-height:1.15}
 .quote{border-radius:28px; padding:clamp(28px,4vw,48px); background:var(--night); color:var(--on-night); border:1px solid var(--line); position:relative; overflow:hidden}
 .quote::before{content:""; position:absolute; right:-80px; bottom:-80px; width:260px; height:260px; border-radius:50%; background:radial-gradient(closest-side,rgba(109,74,255,.45),transparent)}
 .quote p{font-family:var(--display); font-weight:500; font-size:clamp(28px,3.4vw,44px); letter-spacing:-.025em; line-height:1.1; position:relative}
-.quote p em{font-style:normal; background:linear-gradient(100deg,#ff6a3d,#8f72ff); -webkit-background-clip:text; background-clip:text; color:transparent}
+.quote p em{font-style:normal; background:linear-gradient(100deg,#c7d0ff,#d9c6ff 50%,#f7c4e6); -webkit-background-clip:text; background-clip:text; color:transparent}
 .quote small{display:block; margin-top:20px; font-family:var(--mono); font-size:12px; letter-spacing:.12em; text-transform:uppercase; opacity:.65; position:relative}
 
 /* Pillars */
 .pillars{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:52px}
 .pillar{border-radius:24px; padding:32px 28px; color:#fff; position:relative; overflow:hidden; min-height:300px; display:flex; flex-direction:column; transition:transform .4s var(--ease)}
 .pillar:hover{transform:translateY(-6px)}
-.pillar:nth-child(1){background:linear-gradient(160deg,#ff7a45,#e2552b)}
-.pillar:nth-child(2){background:radial-gradient(90% 70% at 80% 10%,rgba(143,114,255,.35),transparent 70%),radial-gradient(70% 60% at 10% 100%,rgba(255,106,61,.25),transparent 70%),var(--night); color:var(--on-night)}
-.pillar:nth-child(3){background:linear-gradient(160deg,#8f72ff,#5b34e6)}
+.pillar:nth-child(1){background:linear-gradient(160deg,#6d7fe0,#4258ac)}
+.pillar:nth-child(2){background:radial-gradient(90% 70% at 80% 10%,rgba(143,114,255,.35),transparent 70%),radial-gradient(70% 60% at 10% 100%,rgba(200,134,189,.28),transparent 70%),var(--night); color:var(--on-night)}
+.pillar:nth-child(3){background:linear-gradient(160deg,#c48bc0,#7d62d8)}
 .pillar .ico{width:36px; height:36px; stroke-width:1.5}
 .pillar h3{font-size:clamp(34px,3.4vw,46px); font-weight:600; letter-spacing:-.02em; margin-top:auto; padding-top:40px}
 .pillar .sub{font-weight:600; margin-top:6px; font-size:17px}
@@ -290,7 +296,7 @@ h3{font-size:22px; letter-spacing:-.02em; line-height:1.15}
 .join{border:1px solid var(--line);}
 .join{--bg:#f4f0fa; --ink:#14111a; border-radius:36px; background:var(--night); color:var(--on-night); padding:clamp(32px,6vw,72px); display:grid; grid-template-columns:1fr 1.05fr; gap:clamp(28px,5vw,72px); position:relative; overflow:hidden}
 .join::before{content:""; position:absolute; left:-15%; top:-40%; width:70%; height:120%; background:radial-gradient(closest-side,rgba(109,74,255,.38),transparent); pointer-events:none}
-.join::after{content:""; position:absolute; right:-10%; bottom:-50%; width:60%; height:110%; background:radial-gradient(closest-side,rgba(255,106,61,.28),transparent); pointer-events:none}
+.join::after{content:""; position:absolute; right:-10%; bottom:-50%; width:60%; height:110%; background:radial-gradient(closest-side,rgba(200,134,189,.3),transparent); pointer-events:none}
 .join > *{position:relative; z-index:1}
 .join .kicker{color:var(--sun)}
 .join h2{color:var(--bg)}
@@ -345,7 +351,7 @@ form.signup .btn:disabled{opacity:.7; cursor:wait}
 .footer__fog{position:absolute; inset:auto 0 0; z-index:2; height:17%; pointer-events:none; background:linear-gradient(to top, var(--mist) 0%, rgb(226 227 241 / .6) 30%, rgb(226 227 241 / 0) 100%)}
 .footer__content{position:relative; z-index:3; display:grid; grid-template-columns:calc(440 * var(--u)) calc(240 * var(--u)) calc(240 * var(--u)) 1fr; align-items:start; width:calc(1440 * var(--u)); margin:0 auto; padding:calc(86 * var(--u)) calc(100 * var(--u)) 0 calc(160 * var(--u))}
 .fbrand__logo{display:inline-flex; align-items:center; gap:calc(10 * var(--u)); text-decoration:none}
-.fbrand__logo img{width:calc(40 * var(--u)); height:auto}
+.fbrand__logo img{width:auto; height:calc(96 * var(--u))}
 .fbrand__logo span{font-family:var(--display); font-weight:600; font-size:calc(17 * var(--u)); letter-spacing:.14em; text-transform:uppercase; color:var(--brand)}
 .fbrand__title{margin-top:calc(19 * var(--u)); font-family:var(--sans); font-size:calc(20 * var(--u)); font-weight:600; line-height:1.2; letter-spacing:-.03em}
 .fbrand__text{max-width:calc(412 * var(--u)); margin-top:calc(18 * var(--u)); color:var(--f-body); font-size:calc(13.7 * var(--u)); line-height:1.43; letter-spacing:-.012em}
@@ -375,7 +381,7 @@ form.signup .btn:disabled{opacity:.7; cursor:wait}
   .footer__stage::after{background:linear-gradient(to bottom, var(--paper) 0%, color-mix(in srgb,var(--paper) 95%,transparent) 50%, color-mix(in srgb,var(--paper) 80%,transparent) 68%, color-mix(in srgb,var(--paper) 0%,transparent) 90%)}
   .footer__content{grid-template-columns:auto auto auto; justify-content:space-between; column-gap:12px; row-gap:36px; width:100%; padding:40px 20px 0; margin-bottom:max(48vw, 190px)}
   .fbrand{grid-column:1 / -1}
-  .fbrand__logo span{font-size:18px}
+  .fbrand__logo img{height:92px}
   .fbrand__title{font-size:21px}
   .fbrand__text{max-width:34em; font-size:14px}
   .fbrand__cta{height:40px; padding:0 18px 0 16px; font-size:13px}
@@ -409,7 +415,7 @@ form.signup .btn:disabled{opacity:.7; cursor:wait}
 @media (max-width:400px){
   .nav-in{gap:12px}
   .brand b{font-size:16px; letter-spacing:.12em}
-  .logo{width:36px}
+  .logo{height:44px}
 }
 @media (max-width:860px){
   .why,.partners,.join{grid-template-columns:1fr}
@@ -424,6 +430,7 @@ form.signup .btn:disabled{opacity:.7; cursor:wait}
   .nav .btn-primary{display:none}
   .formats,.acts{grid-template-columns:1fr}
   .hero-cta .pill{flex:1 1 100%}
+  .hero-lead br{display:none}
   .hero-shade{background:radial-gradient(ellipse 90% 34% at 50% 68%, rgba(12,8,16,.55), rgba(12,8,16,.2) 60%, transparent 100%), linear-gradient(to bottom, rgba(12,8,16,.3), transparent 16%)}
   .two{grid-template-columns:1fr}
   .t-date b{font-size:36px}
@@ -469,7 +476,7 @@ form.signup .btn:disabled{opacity:.7; cursor:wait}
 
 <header class="nav" id="nav">
   <div class="wrap nav-in">
-    <a class="brand animate-blur-fade-up" style="--t:0ms" href="#top" aria-label="Dragonova home"><img class="logo" src="assets/logo-mark.png" alt="" width="256" height="193"><b>Dragonova</b></a>
+    <a class="brand animate-blur-fade-up" style="--t:0ms" href="#top" aria-label="Dragonova home"><img class="logo" src="assets/logo.png" alt="" width="771" height="800"><b>Dragonova</b></a>
     <ul class="nav-links" id="navLinks">
       <li class="animate-blur-fade-up" style="--t:100ms"><a href="#events">Events</a></li>
       <li class="animate-blur-fade-up" style="--t:150ms"><a href="#how">How it works</a></li>
@@ -490,13 +497,14 @@ form.signup .btn:disabled{opacity:.7; cursor:wait}
     <video class="hero-video" id="heroVideo" autoplay muted loop playsinline preload="auto" aria-hidden="true">
       <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260406_094145_4a271a6c-3869-4f1c-8aa7-aeb0cb227994.mp4" type="video/mp4">
     </video>
+    <div class="hero-grade" aria-hidden="true"></div>
     <div class="hero-blur" aria-hidden="true"></div>
     <div class="hero-shade" aria-hidden="true"></div>
     <div class="wrap hero-content">
       <div class="hero-main">
         <span class="hero-tag liquid-glass animate-blur-fade-up" style="--t:300ms"><i aria-hidden="true"></i>Hobby events in local cafés</span>
         <h1 class="animate-blur-fade-up" style="--t:400ms">Try a new hobby.<br><span class="hl-hero">No commitment.</span></h1>
-        <p class="hero-lead animate-blur-fade-up" style="--t:500ms">Everything’s provided. No experience needed.<br>Just show up curious.</p>
+        <p class="hero-lead animate-blur-fade-up" style="--t:500ms">Everything’s provided. No experience needed. <br>Just show up curious.</p>
         <div class="hero-cta">
           <a class="pill pill-solid animate-blur-fade-up" style="--t:600ms" href="#events"><svg class="ico"><use href="#i-play"/></svg>See upcoming events</a>
           <a class="pill liquid-glass animate-blur-fade-up" style="--t:700ms" href="#how">How it works</a>
@@ -744,7 +752,7 @@ form.signup .btn:disabled{opacity:.7; cursor:wait}
   <div class="footer__fog" aria-hidden="true"></div>
   <div class="footer__content">
     <div class="fbrand">
-      <a class="fbrand__logo" href="#top" aria-label="Dragonova home"><img src="assets/logo-mark.png" alt="" width="256" height="193" loading="lazy"><span>Dragonova</span></a>
+      <a class="fbrand__logo" href="#top" aria-label="Dragonova home"><img src="assets/logo.png" alt="Dragonova" width="771" height="800" loading="lazy"></a>
       <h2 class="fbrand__title">Creative discovery events</h2>
       <p class="fbrand__text">Hands-on hobby events hosted in local cafés: crochet, thrift-flip painting, dragon design and more. Supplies provided, no experience needed. You can’t love what you’ve never had the chance to discover.</p>
       <a class="fbrand__cta" href="#join"><svg class="ico"><use href="#i-bell"/></svg>Get event invites</a>
@@ -920,7 +928,7 @@ const isDark = () => root.dataset.theme ? root.dataset.theme === 'dark' : window
 function syncThemeIcon() {
   themeBtn.querySelector('use').setAttribute('href', isDark() ? '#i-sun' : '#i-moon');
   themeBtn.setAttribute('aria-label', isDark() ? 'Switch to light mode' : 'Switch to dark mode');
-  document.querySelector('meta[name="theme-color"]').content = isDark() ? '#0e0c12' : '#fbf8f4';
+  document.querySelector('meta[name="theme-color"]').content = isDark() ? '#0c0c17' : '#f7f7fb';
 }
 try { const saved = localStorage.getItem('dragonova-theme'); if (saved) root.dataset.theme = saved; } catch (e) {}
 syncThemeIcon();
