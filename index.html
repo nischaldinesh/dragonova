@@ -354,9 +354,9 @@ form.signup .btn:disabled{opacity:.7; cursor:wait}
 .fbrand__logo span{font-family:var(--display); font-weight:600; font-size:calc(17 * var(--u)); letter-spacing:.14em; text-transform:uppercase; color:var(--brand)}
 .fbrand__title{margin-top:calc(19 * var(--u)); font-family:var(--sans); font-size:calc(20 * var(--u)); font-weight:600; line-height:1.2; letter-spacing:-.03em}
 .fbrand__text{max-width:calc(412 * var(--u)); margin-top:calc(18 * var(--u)); color:var(--f-body); font-size:calc(13.7 * var(--u)); line-height:1.43; letter-spacing:-.012em}
-.fbrand__cta{display:inline-flex; align-items:center; gap:calc(6 * var(--u)); height:calc(34 * var(--u)); margin-top:calc(20 * var(--u)); padding:0 calc(18 * var(--u)) 0 calc(16 * var(--u)); border-radius:999px; background:var(--night); color:#fff; font-size:calc(11.8 * var(--u)); font-weight:500; letter-spacing:-.01em; text-decoration:none; transition:background-color .2s, transform .2s}
+.fbrand__cta{display:inline-flex; align-items:center; gap:calc(6 * var(--u)); height:calc(34 * var(--u)); margin-top:calc(20 * var(--u)); padding:0 calc(18 * var(--u)) 0 calc(16 * var(--u)); border-radius:999px; background:var(--ink); color:var(--bg); font-size:calc(11.8 * var(--u)); font-weight:500; letter-spacing:-.01em; text-decoration:none; transition:background-color .2s, transform .2s}
 .fbrand__cta .ico{width:calc(13 * var(--u)); height:calc(13 * var(--u)); stroke-width:2}
-.fbrand__cta:hover{background:#2a2433; transform:translateY(-1px)}
+.fbrand__cta:hover{opacity:.88; transform:translateY(-1px)}
 .fbrand__copy{margin-top:calc(23 * var(--u)); color:var(--f-body); opacity:.8; font-size:calc(12.2 * var(--u)); letter-spacing:.01em}
 .fbrand__status{display:flex; flex-wrap:wrap; gap:calc(8 * var(--u)); margin-top:calc(16 * var(--u)); list-style:none}
 .chip{display:inline-flex; align-items:center; gap:calc(6 * var(--u)); height:calc(25 * var(--u)); padding:0 calc(10 * var(--u)); border:1px solid color-mix(in srgb,var(--ink) 12%,transparent); border-radius:999px; background:color-mix(in srgb,var(--surface) 55%,transparent); font-size:calc(10.8 * var(--u)); font-weight:500; letter-spacing:-.01em; white-space:nowrap}
@@ -997,20 +997,37 @@ form.addEventListener('submit', async e => {
 
 document.getElementById('year').textContent = new Date().getFullYear();
 
-// Footer slogan: stretch each visible line to span the footer width
+// Footer slogan: stretch each visible line to span the footer width.
+// Re-fits whenever fonts finish loading (Safari can measure with the fallback font first),
+// on resize, and when the footer scrolls into view.
 const slogan = document.getElementById('slogan');
 function fitSlogan() {
-  const target = slogan.parentElement.clientWidth * (window.innerWidth < 768 ? 0.92 : 0.86);
+  const target = slogan.parentElement.clientWidth * (window.innerWidth < 768 ? 0.9 : 0.86);
   slogan.querySelectorAll('.ln').forEach(ln => {
-    if (!ln.offsetParent && getComputedStyle(ln).display === 'none') return;
-    ln.style.setProperty('--fs', 100);
-    const w = ln.getBoundingClientRect().width;
-    if (w) ln.style.setProperty('--fs', (100 * target / w).toFixed(2));
+    if (getComputedStyle(ln).display === 'none') return;
+    let fs = 100;
+    for (let k = 0; k < 4; k++) {
+      ln.style.setProperty('--fs', fs);
+      const w = ln.getBoundingClientRect().width;
+      if (!w) return;
+      const next = fs * target / w;
+      if (Math.abs(next - fs) < 0.1) break;
+      fs = next;
+    }
+    ln.style.setProperty('--fs', (Math.floor(fs * 100) / 100).toString());
   });
 }
 fitSlogan();
-if (document.fonts) document.fonts.ready.then(fitSlogan);
+if (document.fonts) {
+  document.fonts.load('600 100px Poppins').then(fitSlogan).catch(() => {});
+  document.fonts.ready.then(fitSlogan);
+  document.fonts.addEventListener('loadingdone', fitSlogan);
+}
+window.addEventListener('load', fitSlogan);
 new ResizeObserver(fitSlogan).observe(slogan.parentElement);
+if ('IntersectionObserver' in window) {
+  new IntersectionObserver(([en]) => { if (en.isIntersecting) fitSlogan(); }).observe(slogan.parentElement);
+}
 
 // Footer video: only load and play while visible
 const footerVideo = document.getElementById('footerVideo');
