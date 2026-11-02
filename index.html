@@ -137,7 +137,7 @@ h3{font-size:22px; letter-spacing:-.02em; line-height:1.15}
 .scroll-cue.gone{opacity:0; pointer-events:none}
 
 /* Blur-fade-up */
-@keyframes blurFadeUp{from{opacity:0; filter:blur(20px); transform:translateY(40px)} to{opacity:1; filter:blur(0); transform:translateY(0)}}
+@keyframes blurFadeUp{from{opacity:0; filter:blur(20px); transform:translateY(40px)} to{opacity:1; filter:none; transform:none}}
 .animate-blur-fade-up{opacity:0; animation:blurFadeUp 1s ease-out forwards; animation-delay:var(--t,0ms)}
 
 /* Nav while over the hero */
@@ -399,10 +399,17 @@ form.signup .btn:disabled{opacity:.7; cursor:wait}
 @media (max-width:1080px){
   .nav-links{display:none}
   .menu-btn{display:grid}
-  .nav.open .nav-links{display:grid; position:absolute; top:72px; left:0; right:0; background:var(--bg); border-bottom:1px solid var(--line); padding:8px var(--gutter) 20px}
+  .nav.open .nav-links{display:grid; position:absolute; top:72px; left:0; right:0; background:var(--bg); border-bottom:1px solid var(--line); padding:8px var(--gutter) 20px; box-shadow:0 24px 40px -24px rgba(var(--shadow),.5); animation:menuIn .28s var(--ease)}
+  .nav-links li.animate-blur-fade-up{animation:none; opacity:1}
   .nav.open .nav-links a,.nav.on-hero.open .nav-links a{display:block; padding:13px 0; font-size:17px; color:var(--ink); border-bottom:1px solid var(--line)}
   .formats{grid-template-columns:repeat(2,1fr)}
   .acts{grid-template-columns:repeat(2,1fr)}
+}
+@keyframes menuIn{from{opacity:0; transform:translateY(-8px)}}
+@media (max-width:400px){
+  .nav-in{gap:12px}
+  .brand b{font-size:16px; letter-spacing:.12em}
+  .logo{width:36px}
 }
 @media (max-width:860px){
   .why,.partners,.join{grid-template-columns:1fr}
@@ -897,6 +904,15 @@ if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { heroVideo.r
   window.addEventListener('resize', schedule);
   update();
 })();
+
+// Entrance animation: drop the class once finished so no filter/transform layer stays on the text (keeps it crisp)
+document.querySelectorAll('.animate-blur-fade-up').forEach(el => {
+  el.addEventListener('animationend', e => {
+    if (e.target !== el || e.animationName !== 'blurFadeUp') return;
+    el.classList.remove('animate-blur-fade-up');
+    el.style.removeProperty('--t');
+  });
+});
 
 // Theme toggle (remembers choice per browser)
 const root = document.documentElement, themeBtn = document.getElementById('themeBtn');
